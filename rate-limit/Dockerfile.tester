@@ -1,0 +1,10 @@
+FROM alpine:latest
+
+RUN apk add --no-cache bash curl
+
+WORKDIR /app
+
+COPY teste_bash.sh /app/
+RUN chmod +x /app/teste_bash.sh
+
+CMD while true; do /app/teste_bash.sh; sleep 5; done

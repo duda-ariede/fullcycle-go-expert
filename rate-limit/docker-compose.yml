@@ -1,0 +1,26 @@
+services:
+  app:
+    build: .
+    ports:
+      - '8080:8080'
+    depends_on:
+      - redis
+    environment:
+      - ENV_FILE=/app/.env
+    volumes:
+      - ./.env:/app/.env
+
+  redis:
+    image: redis:alpine
+    ports:
+      - '6379:6379'
+
+  tester:
+    build:
+      context: .
+      dockerfile: Dockerfile.tester
+    depends_on:
+      - app
+    volumes:
+      - ./teste_bash.sh:/app/teste_bash.sh
+      - ./.env:/app/.env
